@@ -37,6 +37,8 @@ jobs:
           date
   build_on_windows:
     runs-on: windows-lastest
+    if: ${{success()}}
+    needs: [build_on_ubuntu]
     steps:
       - name: Run a multi-line script
         run: |
