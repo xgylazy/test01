@@ -21,15 +21,27 @@ jobs:
       - name: Initialize submodules
         run: git submodule update --init --recursive
 
-      # 列出当前目录内容
-      - name: List current directory contents
-        run: ls -al
-
-      # 安装依赖
+      # 安装依赖项
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake gcc g++ make
+          sudo apt-get install -y cmake gcc g++ make libgraphblas-dev libxxhash-dev \
+                                  libcypher-parser-dev libutf8proc-dev oniguruma-dev \
+                                  libjemalloc-dev
+      
+      # 设置环境变量（根据实际需要设置）
+      - name: Set environment variables
+        run: |
+          export CMAKE_CC_FLAGS="-O3"
+          export CMAKE_LD_FLAGS="-Wl,-Bsymbolic-functions -Wl,-z,relro"
+          export GRAPHBLAS="/usr/include/graphblas"
+          export LIBXXHASH="/usr/include/xxhash"
+          export RAX="/usr/include/rax"
+          export LIBCYPHER_PARSER="/usr/include/cypher-parser"
+          export REDISEARCH_LIBS="/usr/lib/redisearch"
+          export UTF8PROC="/usr/include/utf8proc"
+          export ONIGURUMA="/usr/include/oniguruma"
+        shell: bash
 
       # 创建构建目录
       - name: Create build directory
