@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Initialize submodules
         run: git submodule update --init --recursive
@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake gcc g++ make libxxhash-dev libgraphblas-dev
+          sudo apt-get install -y cmake gcc g++ make libxxhash-dev libgraphblas-dev libcypher-parser-dev
 
       - name: Set environment variables
         run: |
