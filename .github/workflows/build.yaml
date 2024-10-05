@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - master
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,6 +16,14 @@ jobs:
       # 检出代码
       - name: Checkout code
         uses: actions/checkout@v3
+
+      # 初始化子模块
+      - name: Initialize submodules
+        run: git submodule update --init --recursive
+
+      # 列出当前目录内容
+      - name: List current directory contents
+        run: ls -al
 
       # 安装依赖
       - name: Install dependencies
