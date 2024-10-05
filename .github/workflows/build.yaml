@@ -22,7 +22,11 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake gcc g++ make libxxhash-dev libgraphblas-dev libcypher-parser-dev
+          sudo apt-get install -y cmake gcc g++ make libxxhash-dev libgraphblas-dev libssl-dev libseccomp-dev
+          git clone https://github.com/cleishm/libcypher-parser.git
+          cd libcypher-parser
+          make
+          sudo make install
 
       - name: Set environment variables
         run: |
