@@ -19,12 +19,14 @@ jobs:
       - name: Initialize submodules
         run: git submodule update --init --recursive
 
-      - name: Install dependencies
+      - name: Install dependencies and build libcypher-parser
         run: |
           sudo apt-get update
           sudo apt-get install -y cmake gcc g++ make libxxhash-dev libgraphblas-dev libssl-dev libseccomp-dev
           git clone https://github.com/cleishm/libcypher-parser.git
           cd libcypher-parser
+          mkdir build && cd build
+          cmake ..
           make
           sudo make install
 
