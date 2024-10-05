@@ -32,7 +32,7 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo "CMAKE_CC_FLAGS=-O2 -g" >> $GITHUB_ENV
+          echo "CMAKE_CC_FLAGS=-O2 -g -Wall -Werror" >> $GITHUB_ENV
           echo "CMAKE_LD_FLAGS=-L/usr/local/lib" >> $GITHUB_ENV
           echo "CMAKE_SO_LD_FLAGS=-shared" >> $GITHUB_ENV
           echo "GRAPHBLAS=1" >> $GITHUB_ENV
@@ -51,7 +51,7 @@ jobs:
       - name: Run CMake
         run: |
           cd build
-          cmake ..
+          cmake .. -DCMAKE_C_FLAGS="$CMAKE_CC_FLAGS" -DCMAKE_EXE_LINKER_FLAGS="$CMAKE_LD_FLAGS"
 
       - name: Build RedisGraph
         run: |
