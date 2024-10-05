@@ -1,0 +1,52 @@
+name: Build RedisGraph Shared Library (.so)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 检出代码
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 安装依赖
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake gcc g++ make
+
+      # 创建构建目录
+      - name: Create build directory
+        run: mkdir -p build
+
+      # 运行 CMake 配置
+      - name: Run CMake
+        run: |
+          cd build
+          cmake ..
+
+      # 编译并生成 redisgraph.so 文件
+      - name: Build RedisGraph
+        run: |
+          cd build
+          make
+
+      # 验证生成的 redisgraph.so 文件
+      - name: Check for redisgraph.so
+        run: |
+          ls -l src/redisgraph.so
+
+      # 保存生成的 .so 文件为构建工件
+      - name: Upload redisgraph.so
+        uses: actions/upload-artifact@v3
+        with:
+          name: redisgraph-so
+          path: src/redisgraph.so
